@@ -2,19 +2,30 @@ package br.com.guisantos.primeiroaplicativoalura;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        TextView aluno = new TextView(this);
-        aluno.setText("Oi Gente, to aprendendo android :)");
-        setContentView(aluno);
+        setContentView(R.layout.activity_main);
+        List<String> alunos = new ArrayList<>(Arrays.asList("Guilherme", "Brenda", "CS"));
+        ListView listView = findViewById(R.id.activity_main_listaDeAlunos);
+        listView.setAdapter(
+            new ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_list_item_1,
+                alunos
+            )
+        );
     }
 
 }
