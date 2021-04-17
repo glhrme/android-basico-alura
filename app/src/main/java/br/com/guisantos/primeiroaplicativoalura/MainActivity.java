@@ -54,23 +54,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void configuraLista() {
-        ListView listView = findViewById(R.id.activity_main_listaDeAlunos);
+        ListView listaDeAlunos = findViewById(R.id.activity_main_listaDeAlunos);
         List<Aluno> alunos = dao.todos();
-        listView.setAdapter(
+        configuraAdptarDeAlunos(listaDeAlunos, alunos);
+        configuraItemClickListener(listaDeAlunos);
+    }
+
+    private void configuraAdptarDeAlunos(ListView listaDeAlunos, List<Aluno> alunos) {
+        listaDeAlunos.setAdapter(
                 new ArrayAdapter<>(
                         this,
                         android.R.layout.simple_list_item_1,
                         alunos
                 )
         );
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    }
+
+    private void configuraItemClickListener (ListView listaDeAlunos) {
+        listaDeAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Aluno alunoEscolhido = alunos.get(position);
-                Intent vaiParaFormActivity = new Intent(MainActivity.this, FormularioAlunoActivity.class);
-                vaiParaFormActivity.putExtra("aluno", alunoEscolhido);
-                startActivity(vaiParaFormActivity);
+                Aluno alunoEscolhido = (Aluno) parent.getItemAtPosition(position);
+                abreFormularioModoEdicao(alunoEscolhido);
             }
         });
+    }
+
+    private void abreFormularioModoEdicao(Aluno alunoEscolhido) {
+        Intent vaiParaFormActivity = new Intent(MainActivity.this, FormularioAlunoActivity.class);
+        vaiParaFormActivity.putExtra("aluno", alunoEscolhido);
+        startActivity(vaiParaFormActivity);
     }
 }
