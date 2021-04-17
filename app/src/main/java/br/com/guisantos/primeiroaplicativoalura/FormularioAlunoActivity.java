@@ -18,6 +18,9 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     private EditText emailField;
     final AlunoDAO dao = new AlunoDAO();
     private Aluno aluno;
+
+    private boolean hasAlunoExtra = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         
@@ -26,13 +29,18 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         setTitle(R.string.title_app_bar_activity_formulario_aluno);
         inicializacaoDosCampos();
         configuraBotaoSalvar();
-        Intent dados = getIntent();
-        
-        aluno = (Aluno) dados.getSerializableExtra("aluno");
 
-        nameField.setText(aluno.getName());
-        phoneField.setText(aluno.getPhone());
-        emailField.setText(aluno.getEmail());
+        Intent dados = getIntent();
+
+        if(dados.hasExtra("aluno")) {
+            this.hasAlunoExtra = true;
+            aluno = (Aluno) dados.getSerializableExtra("aluno");
+            nameField.setText(aluno.getName());
+            phoneField.setText(aluno.getPhone());
+            emailField.setText(aluno.getEmail());
+        } else {
+            aluno = new Aluno();
+        }
     }
 
     private void configuraBotaoSalvar() {
@@ -42,16 +50,15 @@ public class FormularioAlunoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 preencheAluno();
-                //salvarAluno(aluno);
-                dao.edita(aluno);
+                if(aluno.temIdValido()) {
+                    dao.edita(aluno);
+                } else {
+                    preencheAluno();
+                    dao.salva(aluno);
+                }
                 finish();
             }
         });
-    }
-
-    private void salvarAluno(Aluno aluno) {
-        dao.salva(aluno);
-        finish();
     }
 
     private void preencheAluno() {
