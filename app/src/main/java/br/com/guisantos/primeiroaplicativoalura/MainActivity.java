@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -33,12 +36,26 @@ public class MainActivity extends AppCompatActivity {
         setTitle(R.string.title_app_bar_activity_main_activity);
         configuraFabDeNovoAluno();
         configuraLista();
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         atualizaAlunosNaTela();
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add("Remover");
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        removeUsuarioNaDaoEAdapter(adapter.getItem(menuInfo.position));
+        return super.onContextItemSelected(item);
     }
 
     private void atualizaAlunosNaTela() {
@@ -65,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         listaDeAlunos = findViewById(R.id.activity_main_listaDeAlunos);
         configuraAdptarDeAlunos();
         configuraItemClickListener();
-        configuraLongItemClickListener();
+        registerForContextMenu(listaDeAlunos);
     }
 
     private void configuraAdptarDeAlunos() {
@@ -86,16 +103,21 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //Não utilizado mas apenas de exemplo para consultas futuras.
     private void configuraLongItemClickListener () {
         listaDeAlunos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapaterView, View view, int position, long id) {
                 Aluno clicado = (Aluno) adapaterView.getItemAtPosition(position);
-                dao.remove(clicado);
-                adapter.remove(clicado);
+                removeUsuarioNaDaoEAdapter(clicado);
                 return false;
             }
         });
+    }
+
+    private void removeUsuarioNaDaoEAdapter(Aluno clicado) {
+        dao.remove(clicado);
+        adapter.remove(clicado);
     }
 
     private void abreFormularioModoEdicao(Aluno alunoEscolhido) {
