@@ -2,45 +2,58 @@ package br.com.guisantos.primeiroaplicativoalura;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import br.com.guisantos.primeiroaplicativoalura.dao.AlunoDAO;
 import br.com.guisantos.primeiroaplicativoalura.models.Aluno;
 
 public class FormularioAlunoActivity extends AppCompatActivity {
 
+    private EditText nameField;
+    private EditText phoneField;
+    private EditText emailField;
+    final AlunoDAO dao = new AlunoDAO();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario_aluno);
+        setTitle(R.string.title_app_bar_activity_formulario_aluno);
+        inicializacaoDosCampos();
+        configuraBotaoSalvar();
+    }
 
-        AlunoDAO dao = new AlunoDAO();
-        
-        final EditText nameField = findViewById(R.id.activity_formulario_aluno_nome);
-        final EditText phoneField = findViewById(R.id.activity_formulario_aluno_telefone);
-        final EditText emailField = findViewById(R.id.activity_formulario_aluno_email);
-        
+    private void configuraBotaoSalvar() {
         Button saveButton = findViewById(R.id.activity_formulario_aluno_btn_salvar);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = nameField.getText().toString();
-                String email = emailField.getText().toString();
-                String phone = phoneField.getText().toString();
-
-                Aluno aluno = new Aluno(name, email, phone);
-                dao.salva(aluno);
-                startActivity(new Intent(FormularioAlunoActivity.this, MainActivity.class));
-                finish();
+                Aluno aluno = getAlunoFormulario();
+                salvarAluno(aluno);
             }
         });
+    }
+
+    private void salvarAluno(Aluno aluno) {
+        dao.salva(aluno);
+        finish();
+    }
+
+    private Aluno getAlunoFormulario() {
+        String name = nameField.getText().toString();
+        String email = emailField.getText().toString();
+        String phone = phoneField.getText().toString();
+
+        return new Aluno(name, email, phone);
+    }
+
+    private void inicializacaoDosCampos() {
+        nameField = findViewById(R.id.activity_formulario_aluno_nome);
+        phoneField = findViewById(R.id.activity_formulario_aluno_telefone);
+        emailField = findViewById(R.id.activity_formulario_aluno_email);
     }
 }
