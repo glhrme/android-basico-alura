@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name" translatable="false">Meu Primeiro Aplicativo</string>
+    <string name="fab_main_activity" translatable="true">Add</string>
 </resources>

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Meu Primeiro Aplicativo</string>
+    <string name="fab_main_activity" translatable="false">Adicionar</string>
 </resources>
