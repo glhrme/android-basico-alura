@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setTitle(R.string.title_app_bar_activity_main_activity);
         configuraFabDeNovoAluno();
+        Aluno alunoEntrada = new Aluno("Guilherme", "guisantos@guisantos.com.br", "19");
+        dao.salva(alunoEntrada);
     }
 
     @Override
