@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private final AlunoDAO dao = new AlunoDAO();
     private ArrayAdapter<Aluno> adapter;
+    private ListView listaDeAlunos;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,12 +32,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setTitle(R.string.title_app_bar_activity_main_activity);
         configuraFabDeNovoAluno();
+        configuraLista();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        configuraLista();
+        atualizaAlunosNaTela();
+    }
+
+    private void atualizaAlunosNaTela() {
+        adapter.clear();
+        adapter.addAll(dao.todos());
     }
 
     private void configuraFabDeNovoAluno() {
@@ -55,39 +62,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void configuraLista() {
-        ListView listaDeAlunos = findViewById(R.id.activity_main_listaDeAlunos);
-        List<Aluno> alunos = dao.todos();
-        configuraAdptarDeAlunos(listaDeAlunos, alunos);
-        configuraItemClickListener(listaDeAlunos);
-        configuraLongItemClickListener(listaDeAlunos);
+        listaDeAlunos = findViewById(R.id.activity_main_listaDeAlunos);
+        configuraAdptarDeAlunos();
+        configuraItemClickListener();
+        configuraLongItemClickListener();
     }
 
-    private void configuraAdptarDeAlunos(ListView listaDeAlunos, List<Aluno> alunos) {
+    private void configuraAdptarDeAlunos() {
         adapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_1,
-                alunos
+                dao.todos()
         );
         listaDeAlunos.setAdapter(adapter);
     }
 
-    private void configuraItemClickListener (ListView listaDeAlunos) {
+    private void configuraItemClickListener () {
         listaDeAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Aluno alunoEscolhido = (Aluno) parent.getItemAtPosition(position);
-                abreFormularioModoEdicao(alunoEscolhido);
+                abreFormularioModoEdicao((Aluno) parent.getItemAtPosition(position));
             }
         });
     }
 
-    private void configuraLongItemClickListener (ListView listaDeAlunos) {
+    private void configuraLongItemClickListener () {
         listaDeAlunos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapaterView, View view, int position, long id) {
                 Aluno clicado = (Aluno) adapaterView.getItemAtPosition(position);
                 dao.remove(clicado);
-                Toast.makeText(MainActivity.this, "Removido", Toast.LENGTH_SHORT).show();
                 adapter.remove(clicado);
                 return false;
             }

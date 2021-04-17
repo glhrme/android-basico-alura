@@ -38,9 +38,9 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         if(dados.hasExtra("aluno")) {
             this.hasAlunoExtra = true;
             aluno = (Aluno) dados.getSerializableExtra("aluno");
-            nameField.setText(aluno.getName());
-            phoneField.setText(aluno.getPhone());
-            emailField.setText(aluno.getEmail());
+            this.nameField.setText(aluno.getName());
+            this.phoneField.setText(aluno.getPhone());
+            this.emailField.setText(aluno.getEmail());
         } else {
             aluno = new Aluno();
         }
@@ -65,9 +65,9 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     }
 
     private void preencheAluno() {
-        String name = nameField.getText().toString();
-        String email = emailField.getText().toString();
-        String phone = phoneField.getText().toString();
+        String name = this.nameField.getText().toString();
+        String email = this.emailField.getText().toString();
+        String phone = this.phoneField.getText().toString();
 
         aluno.setEmail(email);
         aluno.setName(name);
@@ -75,8 +75,8 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     }
 
     private void inicializacaoDosCampos() {
-        nameField = findViewById(R.id.activity_formulario_aluno_nome);
-        phoneField = findViewById(R.id.activity_formulario_aluno_telefone);
-        emailField = findViewById(R.id.activity_formulario_aluno_email);
+        this.nameField = findViewById(R.id.activity_formulario_aluno_nome);
+        this.phoneField = findViewById(R.id.activity_formulario_aluno_telefone);
+        this.emailField = findViewById(R.id.activity_formulario_aluno_email);
     }
 }
