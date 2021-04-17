@@ -15,4 +15,8 @@ public class AlunoDAO {
     public List<Aluno> todos() {
         return new ArrayList<>(alunos);
     }
+
+    public String getNameAluno(int posicao) {
+        return alunos.get(posicao).toString();
+    }
 }

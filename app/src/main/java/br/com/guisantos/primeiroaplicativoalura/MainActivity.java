@@ -3,8 +3,10 @@ package br.com.guisantos.primeiroaplicativoalura;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -55,5 +57,11 @@ public class MainActivity extends AppCompatActivity {
                         dao.todos()
                 )
         );
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MainActivity.this, dao.getNameAluno(position), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
