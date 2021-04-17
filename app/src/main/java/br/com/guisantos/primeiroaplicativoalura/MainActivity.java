@@ -2,6 +2,7 @@ package br.com.guisantos.primeiroaplicativoalura;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,7 +15,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.List;
+
 import br.com.guisantos.primeiroaplicativoalura.dao.AlunoDAO;
+import br.com.guisantos.primeiroaplicativoalura.models.Aluno;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,18 +55,21 @@ public class MainActivity extends AppCompatActivity {
 
     private void configuraLista() {
         ListView listView = findViewById(R.id.activity_main_listaDeAlunos);
+        List<Aluno> alunos = dao.todos();
         listView.setAdapter(
                 new ArrayAdapter<>(
                         this,
                         android.R.layout.simple_list_item_1,
-                        dao.todos()
+                        alunos
                 )
         );
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, dao.getNameAluno(position), Toast.LENGTH_SHORT).show();
-                Log.e("AAAA", "erro");
+                Aluno alunoEscolhido = alunos.get(position);
+                Intent vaiParaFormActivity = new Intent(MainActivity.this, FormularioAlunoActivity.class);
+                vaiParaFormActivity.putExtra("aluno", alunoEscolhido);
+                startActivity(vaiParaFormActivity);
             }
         });
     }
