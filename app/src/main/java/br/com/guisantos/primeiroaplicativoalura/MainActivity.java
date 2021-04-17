@@ -23,6 +23,7 @@ import br.com.guisantos.primeiroaplicativoalura.models.Aluno;
 public class MainActivity extends AppCompatActivity {
 
     private final AlunoDAO dao = new AlunoDAO();
+    private ArrayAdapter<Aluno> adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,16 +59,16 @@ public class MainActivity extends AppCompatActivity {
         List<Aluno> alunos = dao.todos();
         configuraAdptarDeAlunos(listaDeAlunos, alunos);
         configuraItemClickListener(listaDeAlunos);
+        configuraLongItemClickListener(listaDeAlunos);
     }
 
     private void configuraAdptarDeAlunos(ListView listaDeAlunos, List<Aluno> alunos) {
-        listaDeAlunos.setAdapter(
-                new ArrayAdapter<>(
-                        this,
-                        android.R.layout.simple_list_item_1,
-                        alunos
-                )
+        adapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_list_item_1,
+                alunos
         );
+        listaDeAlunos.setAdapter(adapter);
     }
 
     private void configuraItemClickListener (ListView listaDeAlunos) {
@@ -76,6 +77,19 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Aluno alunoEscolhido = (Aluno) parent.getItemAtPosition(position);
                 abreFormularioModoEdicao(alunoEscolhido);
+            }
+        });
+    }
+
+    private void configuraLongItemClickListener (ListView listaDeAlunos) {
+        listaDeAlunos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapaterView, View view, int position, long id) {
+                Aluno clicado = (Aluno) adapaterView.getItemAtPosition(position);
+                dao.remove(clicado);
+                Toast.makeText(MainActivity.this, "Removido", Toast.LENGTH_SHORT).show();
+                adapter.remove(clicado);
+                return false;
             }
         });
     }

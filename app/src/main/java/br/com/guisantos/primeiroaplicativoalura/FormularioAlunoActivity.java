@@ -22,16 +22,19 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     private boolean hasAlunoExtra = false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario_aluno);
         setTitle(R.string.title_app_bar_activity_formulario_aluno);
         inicializacaoDosCampos();
         configuraBotaoSalvar();
+        validacaoDeExtra();
+    }
 
+    private void validacaoDeExtra() {
         Intent dados = getIntent();
-
         if(dados.hasExtra("aluno")) {
             this.hasAlunoExtra = true;
             aluno = (Aluno) dados.getSerializableExtra("aluno");
