@@ -7,8 +7,10 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -18,15 +20,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import br.com.guisantos.primeiroaplicativoalura.adapters.AlunoAdapter;
 import br.com.guisantos.primeiroaplicativoalura.dao.AlunoDAO;
 import br.com.guisantos.primeiroaplicativoalura.models.Aluno;
 
 public class MainActivity extends AppCompatActivity {
 
     private final AlunoDAO dao = new AlunoDAO();
-    private ArrayAdapter<Aluno> adapter;
+    private AlunoAdapter adapter;
     private ListView listaDeAlunos;
 
     @Override
@@ -37,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
         configuraFabDeNovoAluno();
         configuraLista();
         for(int i = 0; i <= 5; i++) {
-            dao.salva(new Aluno("Guilherme", "", ""));
-            dao.salva(new Aluno("Brenda", "", ""));
+            this.dao.salva(new Aluno("Guilherme", "", "11986868981"));
+            this.dao.salva(new Aluno("Brenda", "", "98965653245"));
         }
     }
 
@@ -58,14 +62,14 @@ public class MainActivity extends AppCompatActivity {
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.menu_remover) {
             AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-            removeUsuarioNaDaoEAdapter(adapter.getItem(menuInfo.position));
+            removeUsuarioNaDaoEAdapter(this.adapter.getItem(menuInfo.position));
         }
         return super.onContextItemSelected(item);
     }
 
     private void atualizaAlunosNaTela() {
-        adapter.clear();
-        adapter.addAll(dao.todos());
+        this.adapter.clear();
+        this.adapter.addAll(this.dao.todos());
     }
 
     private void configuraFabDeNovoAluno() {
@@ -84,23 +88,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void configuraLista() {
-        listaDeAlunos = findViewById(R.id.activity_main_listaDeAlunos);
+        this.listaDeAlunos = findViewById(R.id.activity_main_listaDeAlunos);
         configuraAdptarDeAlunos();
         configuraItemClickListener();
-        registerForContextMenu(listaDeAlunos);
+        registerForContextMenu(this.listaDeAlunos);
     }
 
     private void configuraAdptarDeAlunos() {
-        adapter = new ArrayAdapter<>(
-                this,
-                android.R.layout.simple_list_item_1,
-                dao.todos()
-        );
-        listaDeAlunos.setAdapter(adapter);
+        this.adapter = new AlunoAdapter(this);
+        this.listaDeAlunos.setAdapter(this.adapter);
     }
 
     private void configuraItemClickListener () {
-        listaDeAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        this.listaDeAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 abreFormularioModoEdicao((Aluno) parent.getItemAtPosition(position));
@@ -110,19 +110,18 @@ public class MainActivity extends AppCompatActivity {
 
     //Não utilizado mas apenas de exemplo para consultas futuras.
     private void configuraLongItemClickListener () {
-        listaDeAlunos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        this.listaDeAlunos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapaterView, View view, int position, long id) {
-                Aluno clicado = (Aluno) adapaterView.getItemAtPosition(position);
-                removeUsuarioNaDaoEAdapter(clicado);
+                removeUsuarioNaDaoEAdapter((Aluno) adapaterView.getItemAtPosition(position));
                 return false;
             }
         });
     }
 
     private void removeUsuarioNaDaoEAdapter(Aluno clicado) {
-        dao.remove(clicado);
-        adapter.remove(clicado);
+        this.dao.remove(clicado);
+        this.adapter.remove(clicado);
     }
 
     private void abreFormularioModoEdicao(Aluno alunoEscolhido) {
