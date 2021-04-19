@@ -1,27 +1,20 @@
 package br.com.guisantos.primeiroaplicativoalura;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import br.com.guisantos.primeiroaplicativoalura.adapters.AlunoAdapter;
 import br.com.guisantos.primeiroaplicativoalura.dao.AlunoDAO;
@@ -40,10 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setTitle(R.string.title_app_bar_activity_main_activity);
         configuraFabDeNovoAluno();
         configuraLista();
-        for(int i = 0; i <= 5; i++) {
-            this.dao.salva(new Aluno("Guilherme", "", "11986868981"));
-            this.dao.salva(new Aluno("Brenda", "", "98965653245"));
-        }
+
     }
 
     @Override
@@ -61,10 +51,24 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.menu_remover) {
-            AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-            removeUsuarioNaDaoEAdapter(this.adapter.getItem(menuInfo.position));
+            confirmaRemocao(item);
         }
         return super.onContextItemSelected(item);
+    }
+
+    private void confirmaRemocao(@NonNull final MenuItem item) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Remover Aluno");
+        dialog.setMessage("Quer mesmo?");
+        dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+                removeUsuarioNaDaoEAdapter(adapter.getItem(menuInfo.position));
+            }
+        });
+        dialog.setNegativeButton("Não", null);
+        dialog.show();
     }
 
 
