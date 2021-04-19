@@ -1,7 +1,5 @@
 package br.com.guisantos.primeiroaplicativoalura;
 
-import android.util.Log;
-
 import br.com.guisantos.primeiroaplicativoalura.dao.AlunoDAO;
 import br.com.guisantos.primeiroaplicativoalura.models.Aluno;
 

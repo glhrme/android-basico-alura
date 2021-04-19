@@ -10,7 +10,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.guisantos.primeiroaplicativoalura.MainActivity;
 import br.com.guisantos.primeiroaplicativoalura.R;
 import br.com.guisantos.primeiroaplicativoalura.models.Aluno;
 

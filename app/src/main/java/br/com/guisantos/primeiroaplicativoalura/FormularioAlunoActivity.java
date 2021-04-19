@@ -5,11 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import br.com.guisantos.primeiroaplicativoalura.dao.AlunoDAO;
 import br.com.guisantos.primeiroaplicativoalura.models.Aluno;
@@ -21,8 +18,6 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     private EditText emailField;
     final AlunoDAO dao = new AlunoDAO();
     private Aluno aluno;
-
-    private boolean hasAlunoExtra = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -51,7 +46,6 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     private void validacaoDeExtra() {
         Intent dados = getIntent();
         if(dados.hasExtra("aluno")) {
-            this.hasAlunoExtra = true;
             aluno = (Aluno) dados.getSerializableExtra("aluno");
             this.nameField.setText(aluno.getName());
             this.phoneField.setText(aluno.getPhone());
