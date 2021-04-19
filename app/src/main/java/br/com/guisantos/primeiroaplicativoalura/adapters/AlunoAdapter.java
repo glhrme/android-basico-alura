@@ -39,13 +39,7 @@ public class AlunoAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View viewCriada = LayoutInflater.from(this.context).inflate(R.layout.item_aluno, parent, false);
-        TextView nome = viewCriada.findViewById(R.id.item_aluno_nome);
-        TextView email = viewCriada.findViewById(R.id.item_aluno_email);
-        nome.setText(alunos.get(position).getName());
-        email.setText(alunos.get(position).getPhone());
-
-        return viewCriada;
+        return obtemViewComDados(position, convertView, parent);
     }
 
     public void clear() {
@@ -58,5 +52,22 @@ public class AlunoAdapter extends BaseAdapter {
 
     public void remove(Aluno clicado) {
         this.alunos.remove(clicado);
+        notifyDataSetChanged();
+    }
+
+    private View obtemViewComDados(int position, View convertView, ViewGroup parent) {
+        View viewCriada = LayoutInflater.from(this.context).inflate(R.layout.item_aluno, parent, false);
+        TextView nome = viewCriada.findViewById(R.id.item_aluno_nome);
+        TextView email = viewCriada.findViewById(R.id.item_aluno_email);
+        nome.setText(alunos.get(position).getName());
+        email.setText(alunos.get(position).getPhone());
+
+        return viewCriada;
+    }
+
+    public void atualizaAlunos(List<Aluno> alunos) {
+        this.clear();
+        this.addAll(alunos);
+        notifyDataSetChanged();
     }
 }

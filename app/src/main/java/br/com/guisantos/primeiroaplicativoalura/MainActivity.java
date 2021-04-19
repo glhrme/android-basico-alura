@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        atualizaAlunosNaTela();
+        adapter.atualizaAlunos(this.dao.todos());
     }
 
     @Override
@@ -67,10 +67,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onContextItemSelected(item);
     }
 
-    private void atualizaAlunosNaTela() {
-        this.adapter.clear();
-        this.adapter.addAll(this.dao.todos());
-    }
 
     private void configuraFabDeNovoAluno() {
         FloatingActionButton buttonFAB = findViewById(R.id.floatingActionButton);
