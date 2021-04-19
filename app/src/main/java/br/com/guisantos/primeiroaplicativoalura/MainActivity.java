@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setTitle(R.string.title_app_bar_activity_main_activity);
         configuraFabDeNovoAluno();
         configuraLista();
-        for(int i = 0; i <= 20; i++) {
+        for(int i = 0; i <= 5; i++) {
             dao.salva(new Aluno("Guilherme", "", ""));
             dao.salva(new Aluno("Brenda", "", ""));
         }

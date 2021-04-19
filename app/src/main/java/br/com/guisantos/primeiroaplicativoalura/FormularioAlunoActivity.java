@@ -1,10 +1,13 @@
 package br.com.guisantos.primeiroaplicativoalura;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,13 +27,25 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario_aluno);
         setTitle(R.string.title_app_bar_activity_formulario_aluno);
         inicializacaoDosCampos();
-        configuraBotaoSalvar();
         validacaoDeExtra();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_formulario_menu_salvar, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.activity_formulario_aluno_btn_salvar_aluno) {
+            finalizaFormulario();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void validacaoDeExtra() {
@@ -46,22 +61,15 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         }
     }
 
-    private void configuraBotaoSalvar() {
-        Button saveButton = findViewById(R.id.activity_formulario_aluno_btn_salvar);
-
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                preencheAluno();
-                if(aluno.temIdValido()) {
-                    dao.edita(aluno);
-                } else {
-                    preencheAluno();
-                    dao.salva(aluno);
-                }
-                finish();
-            }
-        });
+    private void finalizaFormulario() {
+        preencheAluno();
+        if(aluno.temIdValido()) {
+            dao.edita(aluno);
+        } else {
+            preencheAluno();
+            dao.salva(aluno);
+        }
+        finish();
     }
 
     private void preencheAluno() {
