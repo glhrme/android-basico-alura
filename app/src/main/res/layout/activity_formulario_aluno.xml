@@ -1,44 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
->
-
-    <EditText
-        android:id="@+id/activity_formulario_aluno_nome"
+    android:layout_height="wrap_content">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:inputType="text"
-        android:hint="Nome do Aluno"
-    />
-    <EditText
-        android:id="@+id/activity_formulario_aluno_telefone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:inputType="phone"
-        android:hint="Telefone do Aluno"
-    />
-    <EditText
-        android:id="@+id/activity_formulario_aluno_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:inputType="textEmailAddress"
-        android:hint="E-mail do Aluno"
-    />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+    >
 
-    <Button
-        android:id="@+id/activity_formulario_aluno_btn_salvar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="Salvar"
-        android:textColor="@color/white"
 
-    />
+        <EditText
+            android:id="@+id/activity_formulario_aluno_nome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:inputType="text"
+            android:hint="Nome do Aluno"
+        />
+        <EditText
+            android:id="@+id/activity_formulario_aluno_telefone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:inputType="phone"
+            android:hint="Telefone do Aluno"
+        />
+        <EditText
+            android:id="@+id/activity_formulario_aluno_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:inputType="textEmailAddress"
+            android:hint="E-mail do Aluno"
+        />
 
-</LinearLayout>
+        <EditText
+            android:id="@+id/teste2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:inputType="textEmailAddress"
+            android:hint="Não preencher"
+            />
+        <EditText
+            android:id="@+id/teste3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:inputType="textEmailAddress"
+            android:hint="Não preencher"
+            />
+        <EditText
+            android:id="@+id/teste4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:inputType="textEmailAddress"
+            android:hint="Não preencher"
+            />
+        <EditText
+            android:id="@+id/teste5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:inputType="textEmailAddress"
+            android:hint="Não preencher"
+            />
+        <EditText
+            android:id="@+id/teste6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:inputType="textEmailAddress"
+            android:hint="Não preencher"
+            />
+        <EditText
+            android:id="@+id/teste7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:inputType="textEmailAddress"
+            android:hint="Não preencher"
+        />
+
+        <EditText
+            android:id="@+id/teste8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:inputType="textEmailAddress"
+            android:hint="Não preencher"
+        />
+
+        <EditText
+            android:id="@+id/teste9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:inputType="textEmailAddress"
+            android:hint="Não preencher"
+            />
+
+        <EditText
+            android:id="@+id/teste10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:inputType="textEmailAddress"
+            android:hint="Não preencher"
+            />
+
+
+
+        <Button
+            android:id="@+id/activity_formulario_aluno_btn_salvar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="Salvar"
+            android:textColor="@color/white"
+
+        />
+
+    </LinearLayout>
+
+</ScrollView>
